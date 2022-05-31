@@ -21,10 +21,10 @@ var (
 	port         = "30001"
 )
 
-func Flow() {
+func Flow() error {
 	toAuth := shouldAuth()
 	if !toAuth {
-		return
+		return nil
 	}
 
 	c := make(chan codeResponse)
@@ -38,15 +38,27 @@ func Flow() {
 	res := <-c
 	valid := validateCodeResponse(res, state)
 	if !valid {
-		return
+		return fmt.Errorf("failed to obtain code grant")
 	}
 
 	err := exchangeGrant(res.code, state)
 	if err != nil {
-		fmt.Println("Error exchanging grant:", err)
-		return
+		return err
 	}
 
+	return nil
+}
+
+func shouldAuth() bool {
+	token, err := getToken()
+	if err == nil && token.AccessToken != "" {
+		// code is stored, ask if user wants to re-auth
+		fmt.Print("Do you want to re-auth? (y/N): ")
+		var input string
+		fmt.Scanln(&input)
+		return strings.ToLower(input) == "y"
+	}
+	return true
 }
 
 func validateCodeResponse(res codeResponse, state string) bool {
@@ -73,7 +85,7 @@ func exchangeGrant(code string, state string) error {
 	body, _ := json.Marshal(data)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to exchange code grant")
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", basicAuth(clientID, clientSecret))
@@ -81,7 +93,7 @@ func exchangeGrant(code string, state string) error {
 	client := &http.Client{Timeout: time.Second * 10}
 	resp, err := client.Do(req)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to exchange code grant")
 	}
 	defer resp.Body.Close()
 
@@ -90,27 +102,15 @@ func exchangeGrant(code string, state string) error {
 	var token tokenResponse
 	err = json.Unmarshal(body, &token)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to exchange code grant")
 	}
 
 	err = storeToken(string(body))
 
-	return err
+	return fmt.Errorf("failed to storing token")
 }
 
 func basicAuth(clientID string, clientSecret string) string {
 	credentials := clientID + ":" + clientSecret
 	return "Basic " + base64.StdEncoding.EncodeToString([]byte(credentials))
-}
-
-func shouldAuth() bool {
-	token, err := getToken()
-	if err == nil && token.AccessToken != "" {
-		// code is stored, ask if user wants to re-auth
-		fmt.Print("Do you want to re-auth? (y/N): ")
-		var input string
-		fmt.Scanln(&input)
-		return strings.ToLower(input) == "y"
-	}
-	return true
 }
