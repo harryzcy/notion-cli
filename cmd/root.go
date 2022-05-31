@@ -11,7 +11,7 @@ var rootCmd = &cobra.Command{
 	Use:   "notion-cli",
 	Short: "Manage your Notion from the command line",
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+		_ = cmd.Help()
 	},
 }
 
