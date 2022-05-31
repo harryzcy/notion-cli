@@ -1,6 +1,6 @@
 package oauth2
 
-func buildAuthURL(state string) string {
+func buildAuthURL(clientID, state string) string {
 	params := map[string]string{
 		"client_id":     clientID,
 		"redirect_uri":  "http://localhost:" + port + "/callback",

@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -15,13 +14,11 @@ import (
 )
 
 var (
-	baseURL      = "https://api.notion.com/v1/oauth/authorize"
-	clientID     = os.Getenv("NOTION_CLIENT_ID")
-	clientSecret = os.Getenv("NOTION_CLIENT_SECRET")
-	port         = "30001"
+	baseURL = "https://api.notion.com/v1/oauth/authorize"
+	port    = "30001"
 )
 
-func Flow() error {
+func Flow(clientID, clientSecret string) error {
 	toAuth := shouldAuth()
 	if !toAuth {
 		return nil
@@ -32,7 +29,7 @@ func Flow() error {
 
 	state := generateRandomState()
 
-	url := buildAuthURL(state)
+	url := buildAuthURL(clientID, state)
 	_ = browser.OpenURL(url)
 
 	res := <-c
@@ -41,7 +38,7 @@ func Flow() error {
 		return fmt.Errorf("failed to obtain code grant")
 	}
 
-	err := exchangeGrant(res.code, state)
+	err := exchangeGrant(clientID, clientSecret, res.code, state)
 	if err != nil {
 		return err
 	}
@@ -74,7 +71,7 @@ func validateCodeResponse(res codeResponse, state string) bool {
 	return true
 }
 
-func exchangeGrant(code string, state string) error {
+func exchangeGrant(clientID, clientSecret, code, state string) error {
 	url := "https://api.notion.com/v1/oauth/token"
 
 	data := map[string]string{
