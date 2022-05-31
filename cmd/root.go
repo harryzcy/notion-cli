@@ -8,7 +8,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "notion-cli",
+	Use:   "notion",
 	Short: "Manage your Notion from the command line",
 	Run: func(cmd *cobra.Command, args []string) {
 		_ = cmd.Help()
@@ -25,5 +25,5 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().StringP("token", "t", "", "integration token")
+	rootCmd.PersistentFlags().StringP("token", "t", "", "integration token")
 }
