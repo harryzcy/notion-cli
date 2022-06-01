@@ -103,8 +103,11 @@ func exchangeGrant(clientID, clientSecret, code, state string) error {
 	}
 
 	err = storeToken(string(body))
+	if err != nil {
+		return fmt.Errorf("failed to store token")
+	}
 
-	return fmt.Errorf("failed to storing token")
+	return nil
 }
 
 func basicAuth(clientID string, clientSecret string) string {
