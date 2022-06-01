@@ -15,7 +15,7 @@ func getCallbackHandler(c chan codeResponse) http.HandlerFunc {
 	}
 }
 
-func startServer(c chan codeResponse) {
+func startServer(c chan codeResponse) error {
 	http.HandleFunc("/callback", getCallbackHandler(c))
-	http.ListenAndServe(":"+port, nil)
+	return http.ListenAndServe(":"+port, nil)
 }

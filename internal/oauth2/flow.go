@@ -25,7 +25,14 @@ func Flow(clientID, clientSecret string) error {
 	}
 
 	c := make(chan codeResponse)
-	go startServer(c)
+	startErr := make(chan error)
+	go func() {
+		err := startServer(c)
+		startErr <- err
+	}()
+	if err := <-startErr; err != nil {
+		return fmt.Errorf("failed to start server")
+	}
 
 	state := generateRandomState()
 
@@ -47,7 +54,7 @@ func Flow(clientID, clientSecret string) error {
 }
 
 func shouldAuth() bool {
-	token, err := getToken()
+	token, err := GetToken()
 	if err == nil && token.AccessToken != "" {
 		// code is stored, ask if user wants to re-auth
 		fmt.Print("Do you want to re-auth? (y/N): ")
