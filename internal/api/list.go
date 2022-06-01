@@ -20,7 +20,7 @@ func ListDatabases() error {
 	defer cancel()
 	client := notionapi.NewClient(notionapi.Token(token.AccessToken))
 
-	fmt.Printf("%-37s %-20s %-20s %-20s\n", "ID", "Name", "Created At", "Edited At")
+	print.PrintDatabaseHeader()
 
 	cursor, err := listDatabasePage(ctx, client, "")
 	if err != nil {
@@ -52,13 +52,7 @@ func listDatabasePage(ctx context.Context, client *notionapi.Client, cursor noti
 	for _, result := range res.Results {
 		db := result.(*notionapi.Database)
 
-		title := parseRichTextList(db.Title)
-		fmt.Printf("%-37s %s %-20s %-20s\n",
-			db.ID,
-			print.Padding(title, 20),
-			db.CreatedTime.Format("2006-01-02 15:04:05"),
-			db.LastEditedTime.Format("2006-01-02 15:04:05"),
-		)
+		print.PrintDatabaseEntry(db)
 	}
 	return res.NextCursor, nil
 }

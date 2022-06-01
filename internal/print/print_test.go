@@ -28,6 +28,11 @@ func TestPadding(t *testing.T) {
 			width:    5,
 			expected: "你好 ",
 		},
+		{
+			text:     "a very long string",
+			width:    5,
+			expected: "a very long string",
+		},
 	}
 
 	for i, test := range tests {

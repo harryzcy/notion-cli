@@ -8,7 +8,10 @@ import (
 
 func Padding(text string, width int) string {
 	occupied := GetWidthUTF8String(text)
-	return text + strings.Repeat(" ", width-occupied)
+	if width > occupied {
+		return text + strings.Repeat(" ", width-occupied)
+	}
+	return text
 }
 
 func GetWidthUTF8String(s string) int {
