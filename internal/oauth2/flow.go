@@ -53,13 +53,15 @@ func Flow(clientID, clientSecret string) error {
 	return nil
 }
 
+var scanln = fmt.Scanln
+
 func shouldAuth() bool {
 	token, err := GetToken()
 	if err == nil && token.AccessToken != "" {
 		// code is stored, ask if user wants to re-auth
 		fmt.Print("Do you want to re-auth? (y/N): ")
 		var input string
-		fmt.Scanln(&input)
+		scanln(&input)
 		return strings.ToLower(input) == "y"
 	}
 	return true
@@ -71,7 +73,7 @@ func validateCodeResponse(res codeResponse, state string) bool {
 		return false
 	}
 
-	if res.state != state {
+	if res.state != state || res.state == "" {
 		fmt.Println("State is not matched")
 		return false
 	}

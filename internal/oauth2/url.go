@@ -16,5 +16,6 @@ func buildQuery(params map[string]string) string {
 	for key, value := range params {
 		query += key + "=" + value + "&"
 	}
+
 	return query[:len(query)-1]
 }

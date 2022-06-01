@@ -1,6 +1,7 @@
 package oauth2
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -17,5 +18,8 @@ func getCallbackHandler(c chan codeResponse) http.HandlerFunc {
 
 func startServer(c chan codeResponse) error {
 	http.HandleFunc("/callback", getCallbackHandler(c))
-	return http.ListenAndServe(":"+port, nil)
+	fmt.Println(21)
+	err := http.ListenAndServe(":"+port, nil)
+	fmt.Println(23)
+	return err
 }

@@ -6,10 +6,18 @@ import (
 	"path/filepath"
 )
 
+var (
+	notionDir = ""
+)
+
+func init() {
+	home, _ := os.UserHomeDir()
+	notionDir = filepath.Join(home, ".notion")
+}
+
 // GetToken returns the token previously stored
 func GetToken() (tokenResponse, error) {
-	dir := getNotionDir()
-	token, err := os.ReadFile(filepath.Join(dir, "token"))
+	token, err := os.ReadFile(filepath.Join(notionDir, "token"))
 	if err != nil {
 		return tokenResponse{}, err
 	}
@@ -19,18 +27,11 @@ func GetToken() (tokenResponse, error) {
 }
 
 func storeToken(token string) error {
-	dir := getNotionDir()
-	err := os.MkdirAll(dir, os.ModePerm)
+	err := os.MkdirAll(notionDir, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	err = os.WriteFile(filepath.Join(dir, "token"), []byte(token), 0644)
+	err = os.WriteFile(filepath.Join(notionDir, "token"), []byte(token), 0644)
 	return err
-}
-
-func getNotionDir() string {
-	home, _ := os.UserHomeDir()
-	dir := filepath.Join(home, ".notion")
-	return dir
 }

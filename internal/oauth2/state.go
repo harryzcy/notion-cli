@@ -5,13 +5,13 @@ import (
 	"time"
 )
 
+const stateLength = 5
+
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func generateRandomState() string {
-	n := 5 // length
-
 	rand.Seed(time.Now().UnixNano())
-	b := make([]rune, n)
+	b := make([]rune, stateLength)
 	for i := range b {
 		b[i] = letters[rand.Intn(len(letters))]
 	}
