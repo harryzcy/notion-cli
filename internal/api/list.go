@@ -25,6 +25,9 @@ func ListDatabases() error {
 			"value":    "database",
 		},
 	})
+	if err != nil {
+		return err
+	}
 	for _, result := range res.Results {
 		database := result.(*notionapi.Database)
 		fmt.Printf("%s %s\n", database.ID, database.Title[0].PlainText)
