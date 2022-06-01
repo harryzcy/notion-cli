@@ -6,7 +6,8 @@ import (
 	"path/filepath"
 )
 
-func getToken() (tokenResponse, error) {
+// GetToken returns the token previously stored
+func GetToken() (tokenResponse, error) {
 	dir := getNotionDir()
 	token, err := os.ReadFile(filepath.Join(dir, "token"))
 	if err != nil {
