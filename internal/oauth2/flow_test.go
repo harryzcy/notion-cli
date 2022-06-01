@@ -1,6 +1,7 @@
 package oauth2
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -51,6 +52,12 @@ func TestShouldAuth(t *testing.T) {
 		auth = shouldAuth()
 		assert.Equal(t, test.want, auth)
 	}
+
+	scanln = func(a ...any) (n int, err error) {
+		return 0, errors.New("err")
+	}
+	auth = shouldAuth()
+	assert.False(t, auth)
 
 	defer func() { scanln = fmt.Scanln }()
 }

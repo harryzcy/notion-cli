@@ -61,7 +61,10 @@ func shouldAuth() bool {
 		// code is stored, ask if user wants to re-auth
 		fmt.Print("Do you want to re-auth? (y/N): ")
 		var input string
-		scanln(&input)
+		_, err = scanln(&input)
+		if err != nil {
+			return false
+		}
 		return strings.ToLower(input) == "y"
 	}
 	return true

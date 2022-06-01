@@ -50,8 +50,9 @@ func TestStoreToken_PermissionDenied(t *testing.T) {
 	}
 	defer os.RemoveAll(notionDir)
 
-	os.Chmod(notionDir, 444) // r--r--r--
-	notionDir += "/.notion"  // a directory inside of a read-only directory
+	err = os.Chmod(notionDir, 0444) // r--r--r--
+	assert.Nil(t, err)
+	notionDir += "/.notion" // a directory inside of a read-only directory
 
 	err = storeToken("{\"access_token\": \"test-token\"}")
 	assert.NotNil(t, err)
