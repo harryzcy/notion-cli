@@ -11,9 +11,10 @@ import (
 
 // LsCmd represents the ls command
 var LsCmd = &cobra.Command{
-	Use:   "ls",
-	Args:  cobra.MaximumNArgs(1),
-	Short: "List databases or pages in a database",
+	Use:     "ls",
+	Aliases: []string{"list"},
+	Args:    cobra.MaximumNArgs(1),
+	Short:   "List databases or pages in a database",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			err := api.ListDatabases()
