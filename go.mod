@@ -3,6 +3,7 @@ module github.com/harryzcy/notion-cli
 go 1.18
 
 require (
+	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/jomei/notionapi v1.8.4
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
 	github.com/spf13/cobra v1.4.0
