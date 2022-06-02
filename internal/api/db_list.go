@@ -15,7 +15,7 @@ var (
 	ErrMultipleDatabasesFound = fmt.Errorf("multiple databases found")
 )
 
-func ListDatabases() error {
+func (db database) List() error {
 	token, err := oauth2.GetToken()
 	if err != nil {
 		return fmt.Errorf("token not found, please run `notion auth` first")
@@ -27,12 +27,12 @@ func ListDatabases() error {
 
 	print.PrintDatabaseHeader()
 
-	cursor, err := listDatabasePage(ctx, client, "")
+	cursor, err := db.listDatabasePage(ctx, client, "")
 	if err != nil {
 		return err
 	}
 	for cursor != "" {
-		cursor, err = listDatabasePage(ctx, client, cursor)
+		cursor, err = db.listDatabasePage(ctx, client, cursor)
 		if err != nil {
 			return err
 		}
@@ -41,7 +41,7 @@ func ListDatabases() error {
 	return nil
 }
 
-func listDatabasePage(ctx context.Context, client *notionapi.Client, cursor notionapi.Cursor) (notionapi.Cursor, error) {
+func (db database) listDatabasePage(ctx context.Context, client *notionapi.Client, cursor notionapi.Cursor) (notionapi.Cursor, error) {
 	res, err := client.Search.Do(ctx, &notionapi.SearchRequest{
 		Filter: map[string]string{
 			"property": "object",
@@ -62,7 +62,7 @@ func listDatabasePage(ctx context.Context, client *notionapi.Client, cursor noti
 	return res.NextCursor, nil
 }
 
-func ListPagesInDatabase(database string) error {
+func (db database) ListPages(database string) error {
 	token, err := oauth2.GetToken()
 	if err != nil {
 		return fmt.Errorf("token not found, please run `notion auth` first")
@@ -76,7 +76,7 @@ func ListPagesInDatabase(database string) error {
 	if notionutil.IsNotionID(database) {
 		id = notionapi.DatabaseID(database)
 	} else {
-		id, err = GetDatabaseIDByName(ctx, client, database)
+		id, err = db.getDatabaseIDByName(ctx, client, database)
 		if err != nil {
 			if err == ErrMultipleDatabasesFound {
 				err = nil
@@ -85,12 +85,12 @@ func ListPagesInDatabase(database string) error {
 		}
 	}
 
-	err = queryDatabase(ctx, client, id)
+	err = db.queryDatabase(ctx, client, id)
 
 	return err
 }
 
-func GetDatabaseIDByName(ctx context.Context, client *notionapi.Client, name string) (notionapi.DatabaseID, error) {
+func (db database) getDatabaseIDByName(ctx context.Context, client *notionapi.Client, name string) (notionapi.DatabaseID, error) {
 	res, err := client.Search.Do(ctx, &notionapi.SearchRequest{
 		Query: name,
 		Filter: map[string]string{
@@ -128,8 +128,8 @@ func GetDatabaseIDByName(ctx context.Context, client *notionapi.Client, name str
 	return "", ErrMultipleDatabasesFound
 }
 
-func queryDatabase(ctx context.Context, client *notionapi.Client, id notionapi.DatabaseID) error {
-	properties, err := retrieveDatabaseProperties(ctx, client, id)
+func (db database) queryDatabase(ctx context.Context, client *notionapi.Client, id notionapi.DatabaseID) error {
+	properties, err := db.retrieveDatabaseProperties(ctx, client, id)
 	if err != nil {
 		return err
 	}
@@ -156,7 +156,7 @@ func queryDatabase(ctx context.Context, client *notionapi.Client, id notionapi.D
 	return nil
 }
 
-func retrieveDatabaseProperties(ctx context.Context,
+func (db database) retrieveDatabaseProperties(ctx context.Context,
 	client *notionapi.Client, id notionapi.DatabaseID,
 ) (notionapi.PropertyConfigs, error) {
 	res, err := client.Database.Get(ctx, id)
