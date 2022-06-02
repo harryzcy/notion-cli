@@ -16,26 +16,27 @@ const (
 )
 
 func PrintDatabaseHeader() {
-	fmt.Printf("%-37s %-20s %-20s %-20s\n",
-		"ID",
-		"Name",
-		"Created At",
-		"Edited At",
+	fmt.Printf("%s %s %s %s\n",
+		TruncateOrPad("ID", idPadding),
+		TruncateOrPad("Title", databasePadding),
+		TruncateOrPad("Created At", databasePadding),
+		TruncateOrPad("Edited At", databasePadding),
 	)
 }
 
 func PrintDatabaseEntry(db *notionapi.Database) {
 	title := notionutil.ParseRichTextList(db.Title)
-	fmt.Printf("%-37s %s %-20s %-20s\n",
-		db.ID,
-		Padding(title, 20),
-		db.CreatedTime.Format("2006-01-02 15:04:05"),
-		db.LastEditedTime.Format("2006-01-02 15:04:05"),
+
+	fmt.Printf("%s %s %s %-20s\n",
+		TruncateOrPad(db.ID.String(), idPadding),
+		TruncateOrPad(title, databasePadding),
+		TruncateOrPad(db.CreatedTime.Format("2006-01-02 15:04:05"), databasePadding),
+		TruncateOrPad(db.LastEditedTime.Format("2006-01-02 15:04:05"), databasePadding),
 	)
 }
 
 func PrintDatabasePageHeader(properties notionapi.PropertyConfigs) []string {
-	fmt.Print(TruncateOrPad("ID", idPadding))
+	fmt.Print(TruncateOrPad("ID", idPadding) + " ")
 	orderedNames := make([]string, len(properties))
 
 	i := 0
@@ -52,7 +53,7 @@ func PrintDatabasePageHeader(properties notionapi.PropertyConfigs) []string {
 }
 
 func PrintDatabasePageEntry(page notionapi.Page, propertyNames []string) {
-	fmt.Print(Padding(page.ID.String(), idPadding))
+	fmt.Print(TruncateOrPad(page.ID.String(), idPadding) + " ")
 	for _, name := range propertyNames {
 		value := ""
 

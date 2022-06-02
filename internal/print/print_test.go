@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPadding(t *testing.T) {
+func TestTruncateOrPad(t *testing.T) {
 	tests := []struct {
 		text     string
 		width    int
@@ -30,14 +30,14 @@ func TestPadding(t *testing.T) {
 		},
 		{
 			text:     "a very long string",
-			width:    5,
-			expected: "a very long string",
+			width:    6,
+			expected: "a very",
 		},
 	}
 
 	for i, test := range tests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			assert.Equal(t, test.expected, Padding(test.text, test.width))
+			assert.Equal(t, test.expected, TruncateOrPad(test.text, test.width))
 		})
 	}
 }

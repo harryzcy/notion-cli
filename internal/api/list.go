@@ -85,9 +85,9 @@ func ListPagesInDatabase(database string) error {
 		}
 	}
 
-	queryDatabase(ctx, client, id)
+	err = queryDatabase(ctx, client, id)
 
-	return nil
+	return err
 }
 
 func GetDatabaseIDByName(ctx context.Context, client *notionapi.Client, name string) (notionapi.DatabaseID, error) {

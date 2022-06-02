@@ -14,14 +14,6 @@ func TruncateOrPad(s string, maxWidth int) string {
 	return s[:maxWidth]
 }
 
-func Padding(text string, width int) string {
-	occupied := GetWidthUTF8String(text)
-	if width > occupied {
-		return text + strings.Repeat(" ", width-occupied)
-	}
-	return text
-}
-
 func GetWidthUTF8String(s string) int {
 	size := 0
 	for _, runeValue := range s {
