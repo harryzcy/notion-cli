@@ -51,6 +51,7 @@ func TestParseProperty(t *testing.T) {
 	property, err = parseProperty(defined, "number", "x")
 	assert.NotNil(t, err)
 	assert.Equal(t, "invalid number x", err.Error())
+	assert.Empty(t, property)
 
 	property, err = parseProperty(defined, "select", "hello")
 	assert.Nil(t, err)
