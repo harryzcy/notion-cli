@@ -209,17 +209,21 @@ func parseIcon(icon string) (notionapi.Icon, error) {
 		}, nil
 	}
 
-	icon = strings.TrimPrefix(icon, "external=")
-	return notionapi.Icon{
-		Type: "external",
-		External: &notionapi.FileObject{
-			URL: icon,
-		},
-	}, nil
+	icon = strings.TrimPrefix(icon, "external,")
+	if icon != "" {
+		return notionapi.Icon{
+			Type: "external",
+			External: &notionapi.FileObject{
+				URL: icon,
+			},
+		}, nil
+	}
+
+	return notionapi.Icon{}, nil
 }
 
 func parseCover(cover string) (notionapi.FileObject, error) {
-	cover = strings.TrimPrefix(cover, "external=")
+	cover = strings.TrimPrefix(cover, "external,")
 	return notionapi.FileObject{
 		URL: cover,
 	}, nil
