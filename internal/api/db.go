@@ -13,6 +13,7 @@ type DatabaseAPI interface {
 	List() error
 	ListPages(database string) error
 	Insert(input DatabaseInsertInput) error
+	DeletePage(input DatabasePageDeleteInput) error
 }
 
 type database struct{}
