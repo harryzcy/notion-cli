@@ -14,6 +14,7 @@ type DatabaseAPI interface {
 	ListPages(database string) error
 	Insert(input DatabaseInsertInput) error
 	TrashPage(input DatabasePageTrashInput) error
+	RecoverPage(input DatabasePageRecoverInput) error
 }
 
 type database struct{}

@@ -18,4 +18,5 @@ func init() {
 	databaseCmd.AddCommand(database.LsCmd)
 	databaseCmd.AddCommand(database.InsertCmd)
 	databaseCmd.AddCommand(database.TrashCmd)
+	databaseCmd.AddCommand(database.RecoverCmd)
 }
