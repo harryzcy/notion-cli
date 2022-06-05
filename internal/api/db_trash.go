@@ -9,13 +9,13 @@ import (
 	"github.com/jomei/notionapi"
 )
 
-type DatabasePageDeleteInput struct {
+type DatabasePageTrashInput struct {
 	Database string
 	PageID   string
 }
 
-// DeletePages deletes a page from a database
-func (db database) DeletePage(input DatabasePageDeleteInput) error {
+// TrashPages trashes a page from a database
+func (db database) TrashPage(input DatabasePageTrashInput) error {
 	token, err := oauth2.GetToken()
 	if err != nil {
 		return fmt.Errorf("token not found, please run `notion auth` first")

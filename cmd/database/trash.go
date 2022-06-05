@@ -8,19 +8,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// DeleteCmd represents the delete command
-var DeleteCmd = &cobra.Command{
-	Use:   "delete",
+// TrashCmd represents the trash command
+var TrashCmd = &cobra.Command{
+	Use:   "trash",
 	Args:  cobra.ExactArgs(2),
-	Short: "Delete a page from a database",
+	Short: "Trash a page from a database",
 	Run: func(cmd *cobra.Command, args []string) {
-		// delete a page from a database
-		input := api.DatabasePageDeleteInput{
+		// trash a page from a database
+		input := api.DatabasePageTrashInput{
 			Database: args[0],
 			PageID:   args[1],
 		}
 
-		err := api.Database.DeletePage(input)
+		err := api.Database.TrashPage(input)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
