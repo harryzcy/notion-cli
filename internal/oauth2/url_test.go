@@ -3,6 +3,7 @@ package oauth2
 import (
 	"net/url"
 	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -47,19 +48,23 @@ func TestBuildQuery(t *testing.T) {
 			params: map[string]string{
 				"foo": "bar",
 			},
-			want: "foo=bar",
 		},
 		{
 			params: map[string]string{
 				"foo":  "bar",
 				"foo2": "bar2",
 			},
-			want: "foo=bar&foo2=bar2",
 		},
 	}
 
 	for _, tt := range tests {
 		got := buildQuery(tt.params)
-		assert.Equal(t, tt.want, got)
+
+		assert.Equal(t, len(tt.params)-1, strings.Count(got, "&"))
+		assert.False(t, strings.HasPrefix(got, "&"))
+		assert.False(t, strings.HasSuffix(got, "&"))
+		for key, value := range tt.params {
+			assert.Contains(t, got, key+"="+value)
+		}
 	}
 }
