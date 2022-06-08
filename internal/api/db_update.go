@@ -61,13 +61,13 @@ func (db database) UpdatePage(input DatabasePageUpdateInput) error {
 		return err
 	}
 
-	client.Page.Update(ctx, notionapi.PageID(input.PageID), &notionapi.PageUpdateRequest{
+	_, err = client.Page.Update(ctx, notionapi.PageID(input.PageID), &notionapi.PageUpdateRequest{
 		Properties: properties,
 		Icon:       icon,
 		Cover:      cover,
 	})
 
-	return nil
+	return err
 }
 
 func parseProperty(defined notionapi.Properties, name, value string) (notionapi.Property, error) {

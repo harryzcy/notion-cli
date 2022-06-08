@@ -139,26 +139,26 @@ func emoji(s string) *notionapi.Emoji {
 func TestParseIcon(t *testing.T) {
 	tests := []struct {
 		icon        string
-		expected    notionapi.Icon
+		expected    *notionapi.Icon
 		expectedErr error
 	}{
 		{
 			icon: "😂",
-			expected: notionapi.Icon{
+			expected: &notionapi.Icon{
 				Type:  "emoji",
 				Emoji: emoji("😂"),
 			},
 		},
 		{
 			icon: "emoji,😂",
-			expected: notionapi.Icon{
+			expected: &notionapi.Icon{
 				Type:  "emoji",
 				Emoji: emoji("😂"),
 			},
 		},
 		{
 			icon: "https://example.com/emoji.png",
-			expected: notionapi.Icon{
+			expected: &notionapi.Icon{
 				Type: "external",
 				External: &notionapi.FileObject{
 					URL: "https://example.com/emoji.png",
@@ -167,7 +167,7 @@ func TestParseIcon(t *testing.T) {
 		},
 		{
 			icon: "external,https://example.com/emoji.png",
-			expected: notionapi.Icon{
+			expected: &notionapi.Icon{
 				Type: "external",
 				External: &notionapi.FileObject{
 					URL: "https://example.com/emoji.png",
@@ -176,7 +176,7 @@ func TestParseIcon(t *testing.T) {
 		},
 		{
 			icon:     "",
-			expected: notionapi.Icon{},
+			expected: &notionapi.Icon{},
 		},
 	}
 
@@ -192,19 +192,25 @@ func TestParseIcon(t *testing.T) {
 func TestParseCover(t *testing.T) {
 	tests := []struct {
 		cover       string
-		expected    notionapi.FileObject
+		expected    *notionapi.Image
 		expectedErr error
 	}{
 		{
 			cover: "https://example.com/cover.png",
-			expected: notionapi.FileObject{
-				URL: "https://example.com/cover.png",
+			expected: &notionapi.Image{
+				Type: "external",
+				External: &notionapi.FileObject{
+					URL: "https://example.com/cover.png",
+				},
 			},
 		},
 		{
 			cover: "external,https://example.com/cover.png",
-			expected: notionapi.FileObject{
-				URL: "https://example.com/cover.png",
+			expected: &notionapi.Image{
+				Type: "external",
+				External: &notionapi.FileObject{
+					URL: "https://example.com/cover.png",
+				},
 			},
 		},
 	}
