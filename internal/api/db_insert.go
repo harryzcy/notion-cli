@@ -42,7 +42,7 @@ func (db database) Insert(input DatabaseInsertInput) error {
 
 	properties := make(notionapi.Properties)
 	for k, v := range input.Properties {
-		property, err := parseProperty(definedProperties, k, v)
+		property, err := parsePropertyFromConfigs(definedProperties, k, v)
 		if err != nil {
 			return err
 		}
@@ -65,7 +65,7 @@ func (db database) Insert(input DatabaseInsertInput) error {
 	return nil
 }
 
-func parseProperty(defined notionapi.PropertyConfigs, name, value string) (notionapi.Property, error) {
+func parsePropertyFromConfigs(defined notionapi.PropertyConfigs, name, value string) (notionapi.Property, error) {
 	config, ok := defined[name]
 	if !ok {
 		return nil, fmt.Errorf("property %s not found", name)
@@ -189,7 +189,7 @@ func parseProperty(defined notionapi.PropertyConfigs, name, value string) (notio
 	return nil, fmt.Errorf("property %s not supported", config.GetType())
 }
 
-func parseIcon(icon string) (notionapi.Icon, error) {
+func parseIcon(icon string) (*notionapi.Icon, error) {
 	isEmoji := false
 	if strings.HasPrefix(icon, "emoji,") {
 		icon = strings.TrimPrefix(icon, "emoji,")
@@ -203,7 +203,7 @@ func parseIcon(icon string) (notionapi.Icon, error) {
 
 	if isEmoji {
 		emoji := notionapi.Emoji(icon)
-		return notionapi.Icon{
+		return &notionapi.Icon{
 			Type:  "emoji",
 			Emoji: &emoji,
 		}, nil
@@ -211,7 +211,7 @@ func parseIcon(icon string) (notionapi.Icon, error) {
 
 	icon = strings.TrimPrefix(icon, "external,")
 	if icon != "" {
-		return notionapi.Icon{
+		return &notionapi.Icon{
 			Type: "external",
 			External: &notionapi.FileObject{
 				URL: icon,
@@ -219,12 +219,15 @@ func parseIcon(icon string) (notionapi.Icon, error) {
 		}, nil
 	}
 
-	return notionapi.Icon{}, nil
+	return &notionapi.Icon{}, nil
 }
 
-func parseCover(cover string) (notionapi.FileObject, error) {
+func parseCover(cover string) (*notionapi.Image, error) {
 	cover = strings.TrimPrefix(cover, "external,")
-	return notionapi.FileObject{
-		URL: cover,
+	return &notionapi.Image{
+		Type: "external",
+		External: &notionapi.FileObject{
+			URL: cover,
+		},
 	}, nil
 }

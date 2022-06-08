@@ -13,6 +13,7 @@ type DatabaseAPI interface {
 	List() error
 	ListPages(database string) error
 	Insert(input DatabaseInsertInput) error
+	UpdatePage(input DatabasePageUpdateInput) error
 	TrashPage(input DatabasePageTrashInput) error
 	RecoverPage(input DatabasePageRecoverInput) error
 }
