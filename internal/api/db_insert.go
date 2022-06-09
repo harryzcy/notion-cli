@@ -70,7 +70,7 @@ func (db database) Insert(input DatabaseInsertInput) error {
 		return err
 	}
 
-	fmt.Println("Page created:", page.ID)
+	fmt.Println("Page inserted:", page.ID)
 
 	return nil
 }
@@ -229,15 +229,19 @@ func parseIcon(icon string) (*notionapi.Icon, error) {
 		}, nil
 	}
 
-	return &notionapi.Icon{}, nil
+	return nil, nil
 }
 
 func parseCover(cover string) (*notionapi.Image, error) {
 	cover = strings.TrimPrefix(cover, "external,")
-	return &notionapi.Image{
-		Type: "external",
-		External: &notionapi.FileObject{
-			URL: cover,
-		},
-	}, nil
+	if cover != "" {
+		return &notionapi.Image{
+			Type: "external",
+			External: &notionapi.FileObject{
+				URL: cover,
+			},
+		}, nil
+	}
+
+	return nil, nil
 }

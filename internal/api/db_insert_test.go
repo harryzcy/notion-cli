@@ -176,7 +176,7 @@ func TestParseIcon(t *testing.T) {
 		},
 		{
 			icon:     "",
-			expected: &notionapi.Icon{},
+			expected: nil,
 		},
 	}
 
@@ -212,6 +212,10 @@ func TestParseCover(t *testing.T) {
 					URL: "https://example.com/cover.png",
 				},
 			},
+		},
+		{
+			cover:    "",
+			expected: nil,
 		},
 	}
 
