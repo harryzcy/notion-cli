@@ -49,11 +49,21 @@ func (db database) Insert(input DatabaseInsertInput) error {
 		properties[k] = property
 	}
 
+	icon, err := parseIcon(input.Icon)
+	if err != nil {
+		return err
+	}
+	cover, err := parseCover(input.Cover)
+	if err != nil {
+		return err
+	}
 	page, err := client.Page.Create(ctx, &notionapi.PageCreateRequest{
 		Parent: notionapi.Parent{
 			Type:       "database_id",
 			DatabaseID: id,
 		},
+		Icon:       icon,
+		Cover:      cover,
 		Properties: properties,
 	})
 	if err != nil {
