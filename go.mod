@@ -7,7 +7,7 @@ require (
 	github.com/jomei/notionapi v1.8.5
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
 	github.com/spf13/cobra v1.4.0
-	github.com/stretchr/testify v1.7.3
+	github.com/stretchr/testify v1.7.4
 	golang.org/x/text v0.3.7
 )
 
