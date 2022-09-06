@@ -85,14 +85,14 @@ func parsePropertyFromConfigs(defined notionapi.PropertyConfigs, name, value str
 	case *notionapi.TitlePropertyConfig:
 		return notionapi.TitleProperty{
 			Title: []notionapi.RichText{
-				{Text: notionapi.Text{Content: value}},
+				{Text: &notionapi.Text{Content: value}},
 			},
 		}, nil
 
 	case *notionapi.RichTextPropertyConfig:
 		return notionapi.RichTextProperty{
 			RichText: []notionapi.RichText{
-				{Text: notionapi.Text{Content: value}},
+				{Text: &notionapi.Text{Content: value}},
 			},
 		}, nil
 

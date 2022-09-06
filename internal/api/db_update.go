@@ -80,14 +80,14 @@ func parseProperty(defined notionapi.Properties, name, value string) (notionapi.
 	case "title":
 		return notionapi.TitleProperty{
 			Title: []notionapi.RichText{
-				{Text: notionapi.Text{Content: value}},
+				{Text: &notionapi.Text{Content: value}},
 			},
 		}, nil
 
 	case "rich_text":
 		return notionapi.RichTextProperty{
 			RichText: []notionapi.RichText{
-				{Text: notionapi.Text{Content: value}},
+				{Text: &notionapi.Text{Content: value}},
 			},
 		}, nil
 
