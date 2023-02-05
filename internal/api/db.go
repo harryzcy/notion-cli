@@ -42,9 +42,9 @@ func (db database) getID(ctx context.Context, client *notionapi.Client, database
 func (db database) getDatabaseIDByName(ctx context.Context, client *notionapi.Client, name string) (notionapi.DatabaseID, error) {
 	res, err := client.Search.Do(ctx, &notionapi.SearchRequest{
 		Query: name,
-		Filter: map[string]string{
-			"property": "object",
-			"value":    "database",
+		Filter: notionapi.SearchFilter{
+			Value:    "database",
+			Property: "object",
 		},
 	})
 	if err != nil {

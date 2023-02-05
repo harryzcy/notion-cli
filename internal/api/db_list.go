@@ -42,9 +42,9 @@ func (db database) List() error {
 
 func (db database) getDBPage(ctx context.Context, client *notionapi.Client, cursor notionapi.Cursor) (notionapi.Cursor, error) {
 	res, err := client.Search.Do(ctx, &notionapi.SearchRequest{
-		Filter: map[string]string{
-			"property": "object",
-			"value":    "database",
+		Filter: notionapi.SearchFilter{
+			Value:    "database",
+			Property: "object",
 		},
 		PageSize:    100,
 		StartCursor: cursor,
