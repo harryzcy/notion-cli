@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/harryzcy/notion-cli/internal/api"
+	"go.zcy.dev/notion-cli/internal/api"
 )
 
 // LsCmd represents the ls command

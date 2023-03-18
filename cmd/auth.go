@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/harryzcy/notion-cli/internal/oauth2"
 	"github.com/spf13/cobra"
+	"go.zcy.dev/notion-cli/internal/oauth2"
 )
 
 // authCmd represents the auth command

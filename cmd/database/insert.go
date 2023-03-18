@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/harryzcy/notion-cli/internal/api"
 	"github.com/spf13/cobra"
+	"go.zcy.dev/notion-cli/internal/api"
 )
 
 // InsertCmd represents the insert command

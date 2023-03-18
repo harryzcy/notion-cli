@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/harryzcy/notion-cli/internal/api"
 	"github.com/spf13/cobra"
+	"go.zcy.dev/notion-cli/internal/api"
 )
 
 // TrashCmd represents the trash command

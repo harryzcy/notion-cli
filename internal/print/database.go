@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/harryzcy/notion-cli/internal/notionutil"
 	"github.com/jomei/notionapi"
+	"go.zcy.dev/notion-cli/internal/notionutil"
 )
 
 const (

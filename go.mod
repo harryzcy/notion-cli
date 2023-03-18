@@ -1,4 +1,4 @@
-module github.com/harryzcy/notion-cli
+module go.zcy.dev/notion-cli
 
 go 1.20
 

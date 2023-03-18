@@ -1,6 +1,6 @@
 package main
 
-import "github.com/harryzcy/notion-cli/cmd"
+import "go.zcy.dev/notion-cli/cmd"
 
 func main() {
 	cmd.Execute()
