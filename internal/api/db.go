@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/harryzcy/notion-cli/internal/notionutil"
-	"github.com/harryzcy/notion-cli/internal/print"
 	"github.com/jomei/notionapi"
+	"go.zcy.dev/notion-cli/internal/notionutil"
+	"go.zcy.dev/notion-cli/internal/print"
 )
 
 type DatabaseAPI interface {

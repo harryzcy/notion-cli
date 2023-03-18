@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/araddon/dateparse"
-	"github.com/harryzcy/notion-cli/internal/oauth2"
 	"github.com/jomei/notionapi"
+	"go.zcy.dev/notion-cli/internal/oauth2"
 )
 
 type DatabasePageUpdateInput struct {

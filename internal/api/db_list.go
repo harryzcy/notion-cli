@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/harryzcy/notion-cli/internal/oauth2"
-	"github.com/harryzcy/notion-cli/internal/print"
 	"github.com/jomei/notionapi"
+	"go.zcy.dev/notion-cli/internal/oauth2"
+	"go.zcy.dev/notion-cli/internal/print"
 )
 
 var (
