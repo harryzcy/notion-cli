@@ -25,6 +25,8 @@ github.com/jomei/notionapi v1.12.6 h1:cAuqc6V5TryVQ9x3s9Tz2S3faMzwM0Wy1+VtxbFNka
 github.com/jomei/notionapi v1.12.6/go.mod h1:wgxFlmxL+oIfxclWkt8jta0PkcBepajish2uCxzBxTo=
 github.com/jomei/notionapi v1.12.7 h1:1+WcEJPFhzR/ek50W5fU6EPXEgbiHEnZ3vElUhwFM2I=
 github.com/jomei/notionapi v1.12.7/go.mod h1:wgxFlmxL+oIfxclWkt8jta0PkcBepajish2uCxzBxTo=
+github.com/jomei/notionapi v1.12.8 h1:uM1w+JjKuc1Qu0OpFcc9O6Xo+hCriORetEc4lejUxPw=
+github.com/jomei/notionapi v1.12.8/go.mod h1:wgxFlmxL+oIfxclWkt8jta0PkcBepajish2uCxzBxTo=
 github.com/mattn/go-runewidth v0.0.10/go.mod h1:RAqKPSqVFrSLVXbA8x7dzmKdmGzieGRCM46jaSJTDAk=
 github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 h1:KoWmjvw+nsYOo29YJK9vDA65RGE3NrOnUtO7a+RF9HU=
 github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8/go.mod h1:HKlIX3XHQyzLZPlr7++PzdhaXEj94dEiJgZDTsxEqUI=
