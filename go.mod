@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
-	github.com/jomei/notionapi v1.12.9
+	github.com/jomei/notionapi v1.12.10
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/spf13/cobra v1.8.0
 	github.com/stretchr/testify v1.8.4
