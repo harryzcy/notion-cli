@@ -15,6 +15,10 @@ func (p InvalidPropertyConfig) GetType() notionapi.PropertyConfigType {
 	return "invalid"
 }
 
+func (p InvalidPropertyConfig) GetID() notionapi.PropertyID {
+	return "invalid"
+}
+
 func TestParseProperty(t *testing.T) {
 	defined := notionapi.PropertyConfigs{
 		"title":        &notionapi.TitlePropertyConfig{},
