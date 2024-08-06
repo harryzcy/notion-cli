@@ -8,7 +8,7 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
-	golang.org/x/text v0.16.0
+	golang.org/x/text v0.17.0
 )
 
 require (
