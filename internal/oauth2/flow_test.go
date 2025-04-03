@@ -19,7 +19,12 @@ func TestShouldAuth(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer os.RemoveAll(notionDir)
+	defer func() {
+		err := os.RemoveAll(notionDir)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	// Test without token
 	auth := shouldAuth()

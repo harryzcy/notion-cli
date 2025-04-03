@@ -22,7 +22,12 @@ func TestToken(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer os.RemoveAll(notionDir)
+	defer func() {
+		err := os.RemoveAll(notionDir)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	// Test that the token is not found
 	token, err := GetToken()
@@ -48,7 +53,12 @@ func TestStoreToken_PermissionDenied(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer os.RemoveAll(notionDir)
+	defer func() {
+		err := os.RemoveAll(notionDir)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	err = os.Chmod(notionDir, 0444) // r--r--r--
 	assert.Nil(t, err)
