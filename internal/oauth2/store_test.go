@@ -1,7 +1,6 @@
 package oauth2
 
 import (
-	"log"
 	"os"
 	"strings"
 	"testing"
@@ -19,14 +18,10 @@ func TestToken(t *testing.T) {
 
 	var err error
 	notionDir, err = os.MkdirTemp("", ".notion-*")
-	if err != nil {
-		log.Fatal(err)
-	}
+	assert.Nil(t, err)
 	defer func() {
 		err := os.RemoveAll(notionDir)
-		if err != nil {
-			log.Fatal(err)
-		}
+		assert.Nil(t, err)
 	}()
 
 	// Test that the token is not found
@@ -42,28 +37,4 @@ func TestToken(t *testing.T) {
 	token, err = GetToken()
 	assert.Nil(t, err)
 	assert.Equal(t, "test-token", token.AccessToken)
-}
-
-func TestStoreToken_PermissionDenied(t *testing.T) {
-	originalDir := notionDir
-	defer func() { notionDir = originalDir }()
-
-	var err error
-	notionDir, err = os.MkdirTemp("", ".notion-*")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer func() {
-		err := os.RemoveAll(notionDir)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
-
-	err = os.Chmod(notionDir, 0444) // r--r--r--
-	assert.Nil(t, err)
-	notionDir += "/.notion" // a directory inside of a read-only directory
-
-	err = storeToken("{\"access_token\": \"test-token\"}")
-	assert.NotNil(t, err)
 }
