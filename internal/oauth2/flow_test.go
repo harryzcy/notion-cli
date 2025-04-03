@@ -3,7 +3,6 @@ package oauth2
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"testing"
 
@@ -16,14 +15,10 @@ func TestShouldAuth(t *testing.T) {
 
 	var err error
 	notionDir, err = os.MkdirTemp("", ".notion-*")
-	if err != nil {
-		log.Fatal(err)
-	}
+	assert.Nil(t, err)
 	defer func() {
 		err := os.RemoveAll(notionDir)
-		if err != nil {
-			log.Fatal(err)
-		}
+		assert.Nil(t, err)
 	}()
 
 	// Test without token
