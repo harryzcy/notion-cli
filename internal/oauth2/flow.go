@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -83,7 +84,7 @@ func validateCodeResponse(res codeResponse, state string) bool {
 	return true
 }
 
-func exchangeGrant(clientID, clientSecret, code, state string) error {
+func exchangeGrant(clientID, clientSecret, code, state string) (err error) {
 	url := "https://api.notion.com/v1/oauth/token"
 
 	data := map[string]string{
@@ -104,7 +105,15 @@ func exchangeGrant(clientID, clientSecret, code, state string) error {
 	if err != nil {
 		return fmt.Errorf("failed to exchange code grant")
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil {
+			if err != nil {
+				err = errors.Join(err, closeErr)
+			} else {
+				err = closeErr
+			}
+		}
+	}()
 
 	body, _ = io.ReadAll(resp.Body)
 

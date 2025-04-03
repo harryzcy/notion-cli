@@ -28,11 +28,12 @@ var InsertCmd = &cobra.Command{
 				value = parts[1]
 			}
 
-			if name == "icon" {
+			switch name {
+			case "icon":
 				input.Icon = value
-			} else if name == "cover" {
+			case "cover":
 				input.Cover = value
-			} else {
+			default:
 				input.Properties[name] = value
 			}
 		}
